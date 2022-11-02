@@ -17,23 +17,44 @@ class _PresentValueState extends State<PresentValue> {
   TextEditingController _controller3 = new TextEditingController();
   TextEditingController _controller4 = new TextEditingController();
   String selected = "";
-  late double annualPV;
-  late double monthlyPV;
+  late double PV;
 
   void PVCalculation() {
+    final compounding = dropdownValue;
     final rate = double.parse(_controller3.text) / 100;
     final amount = int.parse(_controller1.text);
-    final presentValue =
-        amount / (pow((1 + (rate)), int.parse(_controller4.text))).toDouble();
+    final presentValue;
 
-    final presentMonthlyValue = amount /
-        (pow((1 + (rate / 12)), int.parse(_controller4.text) * 12)).toDouble();
+    switch (compounding) {
+      case "Annually":
+        presentValue = amount /
+            (pow((1 + (rate)), int.parse(_controller4.text))).toDouble();
+        break;
+      case "Quarterly":
+        presentValue = amount /
+            (pow((1 + (rate / 4)), int.parse(_controller4.text) * 4))
+                .toDouble();
+        break;
+      case "Monthly":
+        presentValue = amount /
+            (pow((1 + (rate / 12)), int.parse(_controller4.text) * 12))
+                .toDouble();
 
+        break;
+      case "Semi-annually":
+        presentValue = amount /
+            (pow((1 + (rate / 2)), int.parse(_controller4.text) * 2))
+                .toDouble();
+        break;
+      default:
+        presentValue = 0;
+    }
     setState(() {
-      annualPV = presentValue;
-      monthlyPV = presentValue;
+      PV = presentValue;
     });
   }
+
+  String dropdownValue = "Annually";
 
   @override
   Widget build(BuildContext context) {
@@ -114,121 +135,160 @@ class _PresentValueState extends State<PresentValue> {
           SizedBox(
             height: 20,
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(30, 10, 40, 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                inputForm(
-                  title: "Future Worth",
-                  hintText: "Amount in Rupees",
-                  controller: _controller1,
-                ),
-                inputForm(
-                  title: "Interest Rate",
-                  hintText: "Expressed in percentage",
-                  controller: _controller3,
-                ),
-                inputForm(
-                  title: "Time Period",
-                  hintText: "In years",
-                  controller: _controller4,
-                ),
-                SizedBox(
-                  height: 50,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    PVCalculation();
-                    Future.delayed(Duration.zero);
-                    showModalBottomSheet(
-                        isDismissible: false,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Container(
-                            height: 300,
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(20, 30, 0, 0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Result",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w200,
-                                      fontSize: 20,
+          Expanded(
+            child: SizedBox(
+              height: 200,
+              child: ListView(
+                padding: EdgeInsets.all(20),
+                children: [
+                  inputForm(
+                    title: "Future Worth",
+                    hintText: "Amount in Rupees",
+                    controller: _controller1,
+                  ),
+                  inputForm(
+                    title: "Interest Rate",
+                    hintText: "Expressed in percentage",
+                    controller: _controller3,
+                  ),
+                  Text(
+                    "Compounding",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w100,
+                      fontSize: 20,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  DropdownButton(
+                    value: dropdownValue,
+                    items: [
+                      DropdownMenuItem(
+                        child: Text("Annually"),
+                        value: "Annually",
+                      ),
+                      DropdownMenuItem(
+                        child: Text("Quarterly"),
+                        value: "Quarterly",
+                      ),
+                      DropdownMenuItem(
+                        child: Text("Monthly"),
+                        value: "Monthly",
+                      ),
+                      DropdownMenuItem(
+                        child: Text("Semi-annually"),
+                        value: "Semi-annually",
+                      ),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        dropdownValue = value!;
+                      });
+                    },
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  inputForm(
+                    title: "Time Period",
+                    hintText: "In years",
+                    controller: _controller4,
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      PVCalculation();
+                      Future.delayed(Duration.zero);
+                      showModalBottomSheet(
+                          isDismissible: false,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Container(
+                              height: 300,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(20, 30, 0, 0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Result",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w200,
+                                        fontSize: 20,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  result(
-                                    title: "Final Value (Annual)",
-                                    amount: annualPV,
-                                  ),
-                                  result(
-                                    title: "Final Value (Monthly)",
-                                    amount: monthlyPV,
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(right: 20),
-                                      child: Container(
-                                        height: 60,
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          color: Colors.orangeAccent,
-                                          borderRadius:
-                                              BorderRadius.circular(25),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            "Recalculate",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w100,
-                                              fontSize: 20,
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    result(
+                                      title: "Final Value (${dropdownValue})",
+                                      amount: PV,
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 20),
+                                        child: Container(
+                                          height: 60,
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            color: Colors.orangeAccent,
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              "Recalculate",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w100,
+                                                fontSize: 20,
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        });
-                  },
-                  child: Container(
-                    height: 60,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.orangeAccent,
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Calculate",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w100,
-                          fontSize: 20,
+                            );
+                          });
+                    },
+                    child: Container(
+                      height: 60,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.orangeAccent,
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Calculate",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w100,
+                            fontSize: 20,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
+          )
         ],
       ),
     );
