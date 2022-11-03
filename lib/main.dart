@@ -1,293 +1,89 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unnecessary_new, prefer_final_fields
 
 import 'dart:math';
-
-import 'package:financial_calculator/screens/B_C_ratio.dart';
-import 'package:financial_calculator/screens/PMT.dart';
-import 'package:financial_calculator/screens/PV.dart';
-import 'package:financial_calculator/screens/homePage.dart';
-import 'package:financial_calculator/screens/rate.dart';
-import 'package:financial_calculator/screens/timePeriod.dart';
+import 'package:financial_calculator/screens/Calculator/calculator.dart';
+import 'package:financial_calculator/screens/Taxation/TaxMenuPage.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:financial_calculator/screens/Financial/menuPage.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MaterialApp(
-      home: MenuPage(),
+      home: EconomicsApp(),
       debugShowCheckedModeBanner: false,
     ));
 
-class MenuPage extends StatefulWidget {
-  const MenuPage({super.key});
+class EconomicsApp extends StatefulWidget {
+  const EconomicsApp({super.key});
 
   @override
-  State<MenuPage> createState() => _MenuPageState();
+  State<EconomicsApp> createState() => _EconomicsAppState();
 }
 
-class _MenuPageState extends State<MenuPage> {
+class _EconomicsAppState extends State<EconomicsApp> {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: MyNavigationBar(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class MyNavigationBar extends StatefulWidget {
+  const MyNavigationBar({super.key});
+
+  @override
+  State<MyNavigationBar> createState() => _MyNavigationBarState();
+}
+
+class _MyNavigationBarState extends State<MyNavigationBar> {
+  int _selectedIndex = 0;
+  static const List<Widget> _widgetOptions = <Widget>[
+    MenuPage(),
+    Taxation(),
+    SimpleCalculator(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Icon(
-          Icons.notes,
-          size: 30,
-          color: Colors.black,
+        backgroundColor: Colors.grey[100],
+        body: Center(
+          child: _widgetOptions.elementAt(_selectedIndex),
         ),
-        toolbarHeight: 30,
-        backgroundColor: Colors.orangeAccent,
-        elevation: 0,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 15.0),
-            child: Icon(
-              Icons.info,
-              size: 30,
-              color: Colors.black,
-            ),
-          )
-        ],
-      ),
-      body: body(),
-    );
-  }
-
-  Widget body() {
-    return Container(
-      color: Colors.grey[100],
-      child: Column(
-        children: [
-          Container(
-            height: 170,
-            decoration: BoxDecoration(
-              color: Colors.orangeAccent,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 12,
+            vertical: 9,
+          ),
+          child: GNav(
+            color: Colors.grey,
+            activeColor: Colors.grey[800],
+            tabBackgroundColor: Colors.grey.withOpacity(0.9),
+            gap: 8.5,
+            padding: EdgeInsets.all(16),
+            onTabChange: _onItemTapped,
+            tabs: [
+              GButton(
+                icon: Icons.monetization_on,
+                text: 'Economics',
               ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(top: 20.0),
-              child: Align(
-                alignment: Alignment.center,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Financial",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w200,
-                        fontSize: 35,
-                      ),
-                    ),
-                    Text(
-                      "Calculator",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w200,
-                        fontSize: 35,
-                      ),
-                    ),
-                  ],
-                ),
+              GButton(
+                icon: Icons.car_repair_rounded,
+                text: 'Taxation',
               ),
-            ),
+              GButton(
+                icon: Icons.calculate_sharp,
+                text: 'Simple Calculator',
+              ),
+            ],
           ),
-          SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(30, 36, 30, 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 5,
-                ),
-                Row(
-                  children: [
-                    Container(
-                      height: 120,
-                      width: 155,
-                      child: ElevatedButton.icon(
-                        style: IconButton.styleFrom(
-                            backgroundColor: Colors.amber,
-                            hoverColor: Colors.deepOrange,
-                            focusColor: Colors.amberAccent),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => HomePage()),
-                          );
-                        },
-                        icon: Icon(
-                          // <-- Icon
-                          Icons.calculate,
-                          size: 55.0,
-                        ),
-                        label: Text(
-                          'Future Value',
-                          style: TextStyle(fontSize: 18),
-                        ), // <-- Text
-                      ),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Container(
-                      height: 120,
-                      width: 155,
-                      child: ElevatedButton.icon(
-                        style: IconButton.styleFrom(
-                            backgroundColor: Colors.amber,
-                            hoverColor: Colors.deepOrange,
-                            focusColor: Colors.amberAccent),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => PresentValue()),
-                          );
-                        },
-                        icon: Icon(
-                          // <-- Icon
-                          Icons.calculate,
-                          size: 55.0,
-                        ),
-                        label: Text(
-                          'Present Value',
-                          style: TextStyle(fontSize: 18),
-                        ), // <-- Text
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 32,
-                ),
-                Row(
-                  children: [
-                    Container(
-                      height: 120,
-                      width: 155,
-                      child: ElevatedButton.icon(
-                        style: IconButton.styleFrom(
-                            backgroundColor: Colors.amber,
-                            hoverColor: Colors.deepOrange,
-                            focusColor: Colors.amberAccent),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => InterestRate()),
-                          );
-                        },
-                        icon: Icon(
-                          // <-- Icon
-                          Icons.percent_outlined,
-                          size: 55.0,
-                        ),
-                        label: Text(
-                          'Interest Rate',
-                          style: TextStyle(fontSize: 18),
-                        ), // <-- Text
-                      ),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Container(
-                      height: 120,
-                      width: 155,
-                      child: ElevatedButton.icon(
-                        style: IconButton.styleFrom(
-                            backgroundColor: Colors.amber,
-                            hoverColor: Colors.deepOrange,
-                            focusColor: Colors.amberAccent),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => TimePeriod()),
-                          );
-                        },
-                        icon: Icon(
-                          // <-- Icon
-                          Icons.timer,
-                          size: 55.0,
-                        ),
-                        label: Text(
-                          'Time Period',
-                          style: TextStyle(fontSize: 18),
-                        ), // <-- Text
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 32,
-                ),
-                Row(
-                  children: [
-                    Container(
-                      height: 120,
-                      width: 155,
-                      child: ElevatedButton.icon(
-                        style: IconButton.styleFrom(
-                            backgroundColor: Colors.amber,
-                            hoverColor: Colors.deepOrange,
-                            focusColor: Colors.amberAccent),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Payment()),
-                          );
-                        },
-                        icon: Icon(
-                          // <-- Icon
-                          Icons.pie_chart,
-                          size: 55.0,
-                        ),
-                        label: Text(
-                          'PMT',
-                          style: TextStyle(fontSize: 18),
-                        ), // <-- Text
-                      ),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Container(
-                      height: 120,
-                      width: 155,
-                      child: ElevatedButton.icon(
-                        style: IconButton.styleFrom(
-                            backgroundColor: Colors.amber,
-                            hoverColor: Colors.deepOrange,
-                            focusColor: Colors.amberAccent),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => B_C_Ratio()),
-                          );
-                        },
-                        icon: Icon(
-                          // <-- Icon
-                          Icons.rate_review_rounded,
-                          size: 55.0,
-                        ),
-                        label: Text(
-                          'B-C Ratio',
-                          style: TextStyle(fontSize: 18),
-                        ), // <-- Text
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+        ));
   }
 }
