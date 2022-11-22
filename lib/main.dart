@@ -53,7 +53,7 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey[100],
+        backgroundColor: Colors.grey[200],
         body: Center(
           child: _widgetOptions.elementAt(_selectedIndex),
         ),

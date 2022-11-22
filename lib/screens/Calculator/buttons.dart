@@ -23,11 +23,12 @@ class MyButton extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(6),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(100),
+          borderRadius: BorderRadius.all(Radius.circular(32)),
           child: Container(
             height: 12,
             decoration: BoxDecoration(
               color: color,
+
               // borderRadius: BorderRadius.all(
               //   Radius.circular(100),
               // ),
@@ -38,7 +39,7 @@ class MyButton extends StatelessWidget {
                 style: TextStyle(
                   color: textColor,
                   fontSize: 24,
-                  fontWeight: FontWeight.w300,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),

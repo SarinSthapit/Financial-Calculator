@@ -40,7 +40,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white38,
+      backgroundColor: Color.fromRGBO(229, 195, 209, 0.3),
       body: Column(
         children: <Widget>[
           Container(
@@ -53,7 +53,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
               ),
             ),
             child: Padding(
-              padding: EdgeInsets.fromLTRB(0, 36, 0, 12),
+              padding: EdgeInsets.fromLTRB(0, 47, 0, 12),
               child: Align(
                 alignment: Alignment.center,
                 child: Column(
@@ -183,7 +183,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                         buttonText: buttons[index],
                         color: isOperator(buttons[index])
                             ? BoxPurple
-                            : BoxLightGrey,
+                            : BoxLightGrey2,
                         textColor: isOperator(buttons[index])
                             ? Colors.grey[100]
                             : Colors.grey[800],

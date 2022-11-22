@@ -7,271 +7,34 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-class FourWheel extends StatefulWidget {
-  const FourWheel({super.key});
+class Machinery extends StatefulWidget {
+  const Machinery({super.key});
 
   @override
-  State<FourWheel> createState() => _FourWheelState();
+  State<Machinery> createState() => _MachineryState();
 }
 
-class _FourWheelState extends State<FourWheel> {
-  TextEditingController _controller1 = new TextEditingController();
-  TextEditingController _controller2 = new TextEditingController();
-
+class _MachineryState extends State<Machinery> {
   String selected = "";
   late double tax;
 
   void TaxCalculation() {
     final type = dropdownValue;
-    final prov = dropdownValue2;
-    final cc = double.parse(_controller2.text);
     final Tax;
 
-    if (prov == "Province 1") {
-      switch (type) {
-        case "Electrical Engine":
-          if (cc >= 350 && cc <= 1000) {
-            Tax = 1500;
-          } else if (cc > 1000 && cc <= 1500) {
-            Tax = 2000;
-          } else if (cc > 1500) {
-            Tax = 3000;
-          } else {
-            Tax = null;
-          }
-          break;
-        case "Fuel Engine":
-          if (cc <= 1000) {
-            Tax = 21000;
-          } else if (cc <= 1500) {
-            Tax = 23000;
-          } else if (cc <= 2000) {
-            Tax = 30000;
-          } else if (cc <= 2500) {
-            Tax = 35500;
-          } else if (cc <= 2900) {
-            Tax = 41000;
-          } else if (cc > 2901) {
-            Tax = 58500;
-          } else {
-            Tax = null;
-          }
-          break;
-        default:
-          Tax = 0;
-      }
-    } else if (prov == "Province 2") {
-      switch (type) {
-        case "Electrical Engine":
-          if (cc >= 350 && cc <= 1000) {
-            Tax = 1500;
-          } else if (cc > 1000 && cc <= 1500) {
-            Tax = 2000;
-          } else if (cc > 1500) {
-            Tax = 3000;
-          } else {
-            Tax = null;
-          }
-          break;
-        case "Fuel Engine":
-          if (cc <= 1000) {
-            Tax = 20000;
-          } else if (cc <= 1500) {
-            Tax = 22000;
-          } else if (cc <= 2000) {
-            Tax = 25000;
-          } else if (cc <= 2500) {
-            Tax = 35000;
-          } else if (cc <= 2900) {
-            Tax = 40000;
-          } else if (cc > 2901) {
-            Tax = 55000;
-          } else {
-            Tax = null;
-          }
-          break;
-        default:
-          Tax = 0;
-      }
-    } else if (prov == "Province 3") {
-      switch (type) {
-        case "Electrical Engine":
-          if (cc >= 350 && cc <= 1000) {
-            Tax = 1500;
-          } else if (cc > 1000 && cc <= 1500) {
-            Tax = 2000;
-          } else if (cc > 1500) {
-            Tax = 3000;
-          } else {
-            Tax = null;
-          }
-          break;
-        case "Fuel Engine":
-          if (cc <= 1000) {
-            Tax = 22000;
-          } else if (cc <= 1500) {
-            Tax = 25000;
-          } else if (cc <= 2000) {
-            Tax = 27000;
-          } else if (cc <= 2500) {
-            Tax = 37000;
-          } else if (cc <= 3000) {
-            Tax = 50000;
-          } else if (cc <= 3500) {
-            Tax = 60500;
-          } else if (cc > 3500) {
-            Tax = 65000;
-          } else {
-            Tax = null;
-          }
-          break;
-        default:
-          Tax = 0;
-      }
-    } else if (prov == "Province 4") {
-      switch (type) {
-        case "Electrical Engine":
-          if (cc >= 350 && cc <= 1000) {
-            Tax = 1500;
-          } else if (cc > 1000 && cc <= 1500) {
-            Tax = 2000;
-          } else if (cc > 1500) {
-            Tax = 3000;
-          } else {
-            Tax = null;
-          }
-          break;
-        case "Fuel Engine":
-          if (cc <= 1000) {
-            Tax = 20000;
-          } else if (cc <= 1500) {
-            Tax = 22000;
-          } else if (cc <= 2000) {
-            Tax = 25000;
-          } else if (cc <= 2500) {
-            Tax = 34000;
-          } else if (cc <= 2900) {
-            Tax = 40000;
-          } else if (cc > 2900) {
-            Tax = 56000;
-          } else {
-            Tax = null;
-          }
-          break;
-        default:
-          Tax = 0;
-      }
-    } else if (prov == "Province 5") {
-      switch (type) {
-        case "Electrical Engine":
-          if (cc >= 350 && cc <= 1000) {
-            Tax = 1500;
-          } else if (cc > 1000 && cc <= 1500) {
-            Tax = 2000;
-          } else if (cc > 1500) {
-            Tax = 3000;
-          } else {
-            Tax = null;
-          }
-          break;
-        case "Fuel Engine":
-          if (cc <= 1000) {
-            Tax = 20000;
-          } else if (cc <= 1500) {
-            Tax = 22000;
-          } else if (cc <= 2000) {
-            Tax = 25000;
-          } else if (cc <= 2500) {
-            Tax = 34000;
-          } else if (cc <= 2900) {
-            Tax = 39000;
-          } else if (cc > 2900) {
-            Tax = 55000;
-          } else {
-            Tax = null;
-          }
-          break;
-        default:
-          Tax = 0;
-      }
-    } else if (prov == "Province 6") {
-      switch (type) {
-        case "Electrical Engine":
-          if (cc >= 350 && cc <= 1000) {
-            Tax = 1500;
-          } else if (cc > 1000 && cc <= 1500) {
-            Tax = 2000;
-          } else if (cc > 1500) {
-            Tax = 3000;
-          } else {
-            Tax = null;
-          }
-          break;
-        case "Fuel Engine":
-          if (cc <= 1000) {
-            Tax = 19000;
-          } else if (cc <= 1500) {
-            Tax = 21000;
-          } else if (cc <= 2000) {
-            Tax = 23000;
-          } else if (cc <= 2500) {
-            Tax = 32000;
-          } else if (cc <= 2900) {
-            Tax = 37000;
-          } else if (cc > 2900) {
-            Tax = 53000;
-          } else {
-            Tax = null;
-          }
-          break;
-        default:
-          Tax = 0;
-      }
-    } else if (prov == "Province 7") {
-      switch (type) {
-        case "Electrical Engine":
-          if (cc >= 350 && cc <= 1000) {
-            Tax = 1500;
-          } else if (cc > 1000 && cc <= 1500) {
-            Tax = 2000;
-          } else if (cc > 1500) {
-            Tax = 3000;
-          } else {
-            Tax = null;
-          }
-          break;
-        case "Fuel Engine":
-          if (cc <= 1000) {
-            Tax = 19000;
-          } else if (cc <= 1500) {
-            Tax = 21000;
-          } else if (cc <= 2000) {
-            Tax = 23000;
-          } else if (cc <= 2500) {
-            Tax = 32000;
-          } else if (cc <= 2900) {
-            Tax = 37000;
-          } else if (cc > 2900) {
-            Tax = 53000;
-          } else {
-            Tax = null;
-          }
-          break;
-        default:
-          Tax = 0;
-      }
+    if (type == "Mini-Tipper") {
+      Tax = 27500;
+    } else if (type == "Others") {
+      Tax = 38500;
     } else {
       Tax = null;
     }
-
     setState(() {
       tax = Tax.toDouble();
     });
   }
 
-  String dropdownValue = "Fuel Engine";
-  String dropdownValue2 = "Province 1";
-
+  String dropdownValue = "Mini-Tipper";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -325,14 +88,14 @@ class _FourWheelState extends State<FourWheel> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Four Wheeler",
+                          "Machinery",
                           style: TextStyle(
                             fontWeight: FontWeight.w200,
                             fontSize: 35,
                           ),
                         ),
                         Text(
-                          "Tax",
+                          "Vehicle",
                           style: TextStyle(
                             fontWeight: FontWeight.w200,
                             fontSize: 35,
@@ -366,12 +129,12 @@ class _FourWheelState extends State<FourWheel> {
                         value: dropdownValue,
                         items: [
                           DropdownMenuItem(
-                            child: Text("Fuel Engine"),
-                            value: "Fuel Engine",
+                            child: Text("Mini-Tipper"),
+                            value: "Mini-Tipper",
                           ),
                           DropdownMenuItem(
-                            child: Text("Electrical Engine"),
-                            value: "Electrical Engine",
+                            child: Text("Others"),
+                            value: "Others",
                           ),
                         ],
                         onChanged: (value) {
@@ -382,62 +145,6 @@ class _FourWheelState extends State<FourWheel> {
                       ),
                       SizedBox(
                         height: 15.0,
-                      ),
-                      inputForm(
-                        title: "Cubic Capacity",
-                        hintText: "In cubic centimetres",
-                        controller: _controller2,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Province",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w100,
-                          fontSize: 20,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      DropdownButton(
-                        value: dropdownValue2,
-                        items: [
-                          DropdownMenuItem(
-                            child: Text("Province 1"),
-                            value: "Province 1",
-                          ),
-                          DropdownMenuItem(
-                            child: Text("Province 2"),
-                            value: "Province 2",
-                          ),
-                          DropdownMenuItem(
-                            child: Text("Province 3"),
-                            value: "Province 3",
-                          ),
-                          DropdownMenuItem(
-                            child: Text("Province 4"),
-                            value: "Province 4",
-                          ),
-                          DropdownMenuItem(
-                            child: Text("Province 5"),
-                            value: "Province 5",
-                          ),
-                          DropdownMenuItem(
-                            child: Text("Province 6"),
-                            value: "Province 6",
-                          ),
-                          DropdownMenuItem(
-                            child: Text("Province 7"),
-                            value: "Province 7",
-                          ),
-                        ],
-                        onChanged: (value2) {
-                          setState(() {
-                            dropdownValue2 = value2!;
-                          });
-                        },
                       ),
                       SizedBox(
                         height: 45,

@@ -1,12 +1,14 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'dart:math';
+import 'package:financial_calculator/screens/InfoPage/About.dart';
 import 'package:financial_calculator/screens/Financial/B_C_ratio.dart';
 import 'package:financial_calculator/screens/Financial/PMT.dart';
 import 'package:financial_calculator/screens/Financial/PV.dart';
 import 'package:financial_calculator/screens/Financial/homePage.dart';
 import 'package:financial_calculator/screens/Financial/rate.dart';
 import 'package:financial_calculator/screens/Financial/timePeriod.dart';
+import 'package:financial_calculator/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class MenuPage extends StatefulWidget {
@@ -22,16 +24,24 @@ class _MenuPageState extends State<MenuPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        toolbarHeight: 24,
+        toolbarHeight: 32,
         backgroundColor: Colors.orangeAccent,
         elevation: 0,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 15.0),
-            child: Icon(
-              Icons.info,
-              size: 24,
-              color: Colors.black,
+            child: IconButton(
+              icon: Icon(
+                Icons.info,
+                size: 24,
+                color: Colors.grey[100],
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AboutUs()),
+                );
+              },
             ),
           )
         ],
@@ -42,7 +52,7 @@ class _MenuPageState extends State<MenuPage> {
 
   Widget body() {
     return Container(
-      color: Colors.grey[100],
+      color: bgYellow,
       child: Column(
         children: [
           Container(
